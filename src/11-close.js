@@ -1,2 +1,0 @@
-	window.v$ = v$;
-})(window);

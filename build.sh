@@ -1,2 +1,2 @@
 #!/bin/bash
-cat ./src/*.js > v\$.js
+cat ./src/*.js > \$.js && cat ./docs/*.md > README.md
