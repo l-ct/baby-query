@@ -5,20 +5,43 @@ Baby Query
 provides (hopefully) helpful methods to a global $ object
 
 */
+
 // function close on later file
 // this is kinda hacky
 (function(window, undefined){
     "use strict";
-let $ = function(selector){
-    let nodes = document.querySelectorAll(selector)
+var $ = function(selector){
+    var nodes = document.querySelectorAll(selector)
     if(nodes.length === 1){
         return nodes[0]
     }
     return nodes
 }
+$.each = function(els, iterator){
+    if(length in els){
+        for(var i=0; i<els.length; i++)
+            iterator(els[i], i, els);
+    } else {
+        console.warn(els, 'not a list or collection');
+        iterator(els, 0, els);
+    }
+};
+
+$.eachRight = function(els, iterator){
+    if(length in els){
+        for(var i=els.length-1; i>=0; i--)
+            iterator(els[i], i, els);
+    } else {
+        // not sure what the point of the warning is
+        // function could be so much simpler
+        console.warn(els, 'not a list or collection');
+        iterator(els, 0, els);
+    }
+};
+
 // gaussian function from p5.js
 $.gaussian = function(mean, sd){
-    let y1, x1, x2, w;
+    var y1, x1, x2, w;
     do {
         x1 = (Math.random() * 2) - 1;
         x2 = (Math.random() * 2) - 1;
@@ -26,8 +49,8 @@ $.gaussian = function(mean, sd){
     } while (w >= 1);
     w = Math.sqrt(-2 * Math.log(w) / w);
     y1 = x1 * w;
-    let m = mean || 0;
-    let s = sd || 1;
+    var m = mean || 0;
+    var s = sd || 1;
     return y1 * s + m;
 };
 
@@ -44,49 +67,64 @@ $.randomInt = function(min, max){
 };
 
 // not to be confused with array.map
-$.mathMap = function (target, in_min, in_max, out_min, out_max) {
-    return (target - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+$.mathMap = function (target, inMin, inMax, outMin, outMax) {
+    return (target - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 };
-
 $.capitalizeFirstLetter = function(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+};
+// takes a hyphenated property
+// and returns camelcased name
+// will return same property name if already camelcase
+$.hyphenToCamelCase = function(str) {
+    return str.replace(/-([a-z])/g, function (g) {
+        return g[1].toUpperCase();
+    });
 };
 $.addClass = function(el, className){
     this.classList.add(className);
 };
-// what about remove class?
+$.removeClass = function(el, className){
+    this.classList.remove(className);
+};
+
 $.remove = function(el){
     el.parentNode.removeChild(el);
 };
 $.append = function(el, content){
-    el.innerHTML = el.innerHTML + content;
+    el.innerHTML += content;
 };
 $.prepend = function(el, content){
     el.innerHTML = content + el.innerHTML;
 };
-$.css = function(el, property, value){
-    if(value === undefined){
-        return window.getComputedStyle(el)[property];
-    }
-    // takes a hyphenated property
-    // and returns camelcased name
-    // jQuery does it with RegEx
-    property = property.toLowerCase().split('-').map(function(part, index){
-        if(index !== 0)
-            return part.charAt(0).toUpperCase() + part.substr(1)
-        else
-            return part
-    }).join('')
 
+$.css = function(el, property, value){
+    if(value === undefined)
+        return window.getComputedStyle(el)[property];
+    property = $.hyphenToCamelCase(property);
     if(property in el.style)
         el.style[property] = value
     else
-        console.warn(property, 'not a property')
-    return el
+        console.warn(property, 'not a property');
 };
-// syntactic sugar for
-// browser events
-[
+
+$.attr = function(el, attr, value){
+    if(!value)
+        return el.getAttribute(attr);
+    else
+        return el.setAttribute(attr, value);
+};
+
+$.unwrap = function (el){
+    var parent = el.parentNode;
+    // move all children out of the element
+    while (el.firstChild)
+        parent.insertBefore(el.firstChild, el);
+    // remove the empty element
+    parent.removeChild(el);
+};
+
+var events = [
     'abort',
     'beforeinput',
     'blur',
@@ -116,15 +154,15 @@ $.css = function(el, property, value){
     'select',
     'unload',
     'wheel'
-].forEach(function(eventName){
-    $[eventName] = function(el, callback){
-        el.addEventListener(eventName, event => {
+];
+for(var i=0; i<events.length; i++){
+    $[events[i]] = function(el, callback){
+        el.addEventListener(events[i], function(event){
             callback(event, el);
         });
     };
-});
-$.getJSON = function(url, callback){
-    let request = new XMLHttpRequest();
+}$.getJSON = function(url, callback){
+    var request = new XMLHttpRequest();
     request.onload = function() {
         if (this.status >= 200 && this.status < 400) {
             callback(JSON.parse(this.response), this);
@@ -139,14 +177,14 @@ $.getJSON = function(url, callback){
     request.send();
 };
 
-// returns a promise
-$.fetchJSON = async function(url){
-    let response = await fetch(url);
-    return await response.json();
-};
+// // returns a promise
+// $.fetchJSON = async function(url){
+//     var response = await fetch(url);
+//     return await response.json();
+// };
 
 $.post = function(url, data){
-    let request = new XMLHttpRequest();
+    var request = new XMLHttpRequest();
     request.open('POST', url);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     // should I stringify???

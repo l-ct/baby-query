@@ -1,5 +1,5 @@
-let $ = function(selector){
-    let nodes = document.querySelectorAll(selector)
+var $ = function(selector){
+    var nodes = document.querySelectorAll(selector)
     if(nodes.length === 1){
         return nodes[0]
     }

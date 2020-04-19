@@ -1,6 +1,6 @@
 // gaussian function from p5.js
 $.gaussian = function(mean, sd){
-    let y1, x1, x2, w;
+    var y1, x1, x2, w;
     do {
         x1 = (Math.random() * 2) - 1;
         x2 = (Math.random() * 2) - 1;
@@ -8,8 +8,8 @@ $.gaussian = function(mean, sd){
     } while (w >= 1);
     w = Math.sqrt(-2 * Math.log(w) / w);
     y1 = x1 * w;
-    let m = mean || 0;
-    let s = sd || 1;
+    var m = mean || 0;
+    var s = sd || 1;
     return y1 * s + m;
 };
 
@@ -26,7 +26,6 @@ $.randomInt = function(min, max){
 };
 
 // not to be confused with array.map
-$.mathMap = function (target, in_min, in_max, out_min, out_max) {
-    return (target - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+$.mathMap = function (target, inMin, inMax, outMin, outMax) {
+    return (target - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 };
-

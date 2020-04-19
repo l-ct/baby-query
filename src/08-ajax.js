@@ -1,5 +1,5 @@
 $.getJSON = function(url, callback){
-    let request = new XMLHttpRequest();
+    var request = new XMLHttpRequest();
     request.onload = function() {
         if (this.status >= 200 && this.status < 400) {
             callback(JSON.parse(this.response), this);
@@ -14,14 +14,14 @@ $.getJSON = function(url, callback){
     request.send();
 };
 
-// returns a promise
-$.fetchJSON = async function(url){
-    let response = await fetch(url);
-    return await response.json();
-};
+// // returns a promise
+// $.fetchJSON = async function(url){
+//     var response = await fetch(url);
+//     return await response.json();
+// };
 
 $.post = function(url, data){
-    let request = new XMLHttpRequest();
+    var request = new XMLHttpRequest();
     request.open('POST', url);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     // should I stringify???

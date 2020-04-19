@@ -1,6 +1,4 @@
-// syntactic sugar for
-// browser events
-[
+var events = [
     'abort',
     'beforeinput',
     'blur',
@@ -30,10 +28,11 @@
     'select',
     'unload',
     'wheel'
-].forEach(function(eventName){
-    $[eventName] = function(el, callback){
-        el.addEventListener(eventName, event => {
+];
+for(var i=0; i<events.length; i++){
+    $[events[i]] = function(el, callback){
+        el.addEventListener(events[i], function(event){
             callback(event, el);
         });
     };
-});
+}
