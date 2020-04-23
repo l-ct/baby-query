@@ -1,8 +1,8 @@
 /*
 
 Baby Query
-
-provides (hopefully) helpful methods to a global $ object
+provides (hopefully) helpful methods
+to a global $ object
 
 */
 
@@ -10,18 +10,22 @@ provides (hopefully) helpful methods to a global $ object
 // this is kinda hacky
 (function(window, undefined){
     "use strict";
+
 var $ = function(selector){
     var nodes = document.querySelectorAll(selector)
     if(nodes.length === 1){
-        return nodes[0]
+        return nodes[0];
     }
-    return nodes
+    return nodes;
 }
+
 $.each = function(els, iterator){
     if(length in els){
         for(var i=0; i<els.length; i++)
             iterator(els[i], i, els);
     } else {
+        // not sure what the point of the warning is
+        // function could be so much simpler
         console.warn(els, 'not a list or collection');
         iterator(els, 0, els);
     }
@@ -32,8 +36,6 @@ $.eachRight = function(els, iterator){
         for(var i=els.length-1; i>=0; i--)
             iterator(els[i], i, els);
     } else {
-        // not sure what the point of the warning is
-        // function could be so much simpler
         console.warn(els, 'not a list or collection');
         iterator(els, 0, els);
     }
@@ -70,6 +72,7 @@ $.randomInt = function(min, max){
 $.mathMap = function (target, inMin, inMax, outMin, outMax) {
     return (target - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 };
+
 $.capitalizeFirstLetter = function(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
@@ -77,15 +80,16 @@ $.capitalizeFirstLetter = function(str) {
 // and returns camelcased name
 // will return same property name if already camelcase
 $.hyphenToCamelCase = function(str) {
-    return str.replace(/-([a-z])/g, function (g) {
+    return str.replace(/-([a-z])/g, function(g) {
         return g[1].toUpperCase();
     });
 };
+
 $.addClass = function(el, className){
-    this.classList.add(className);
+    el.classList.add(className);
 };
 $.removeClass = function(el, className){
-    this.classList.remove(className);
+    el.classList.remove(className);
 };
 
 $.remove = function(el){
@@ -161,7 +165,9 @@ for(var i=0; i<events.length; i++){
             callback(event, el);
         });
     };
-}$.getJSON = function(url, callback){
+}
+
+$.getJSON = function(url, callback){
     var request = new XMLHttpRequest();
     request.onload = function() {
         if (this.status >= 200 && this.status < 400) {
@@ -177,12 +183,6 @@ for(var i=0; i<events.length; i++){
     request.send();
 };
 
-// // returns a promise
-// $.fetchJSON = async function(url){
-//     var response = await fetch(url);
-//     return await response.json();
-// };
-
 $.post = function(url, data){
     var request = new XMLHttpRequest();
     request.open('POST', url);
@@ -190,5 +190,6 @@ $.post = function(url, data){
     // should I stringify???
     request.send(data);
 }
+
     window.$ = $;
 })(window);

@@ -29,3 +29,4 @@ $.randomInt = function(min, max){
 $.mathMap = function (target, inMin, inMax, outMin, outMax) {
     return (target - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 };
+

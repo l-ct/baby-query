@@ -1,8 +1,8 @@
 $.addClass = function(el, className){
-    this.classList.add(className);
+    el.classList.add(className);
 };
 $.removeClass = function(el, className){
-    this.classList.remove(className);
+    el.classList.remove(className);
 };
 
 $.remove = function(el){

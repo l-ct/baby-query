@@ -14,12 +14,6 @@ $.getJSON = function(url, callback){
     request.send();
 };
 
-// // returns a promise
-// $.fetchJSON = async function(url){
-//     var response = await fetch(url);
-//     return await response.json();
-// };
-
 $.post = function(url, data){
     var request = new XMLHttpRequest();
     request.open('POST', url);
@@ -27,3 +21,4 @@ $.post = function(url, data){
     // should I stringify???
     request.send(data);
 }
+

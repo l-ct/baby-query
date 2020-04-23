@@ -1,8 +1,8 @@
 /*
 
 Baby Query
-
-provides (hopefully) helpful methods to a global $ object
+provides (hopefully) helpful methods
+to a global $ object
 
 */
 
