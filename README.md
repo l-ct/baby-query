@@ -132,7 +132,7 @@ Removes  a value to the attribute.
 ### Events
 
 ```js
-$.click(e => {
+$.click(el, e => {
     console.log(e)
 })
 ```
