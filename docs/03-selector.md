@@ -1,8 +1,8 @@
 
-### Selector
+#### Selector
 
 ```js
 let el = $(selector)
+// returns either an unmodified Node or HTMLCollection/NodeList
+// using document.querySelectorAll()
 ```
-
-Takes a `string` and returns either a `node`, or an `HTML collection`.

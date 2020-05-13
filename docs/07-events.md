@@ -1,13 +1,12 @@
 
-### Events
+#### Events
 
 ```js
-$.click(el, e => {
-    console.log(e)
+$.click(el, event => {
+    console.log(event)
 })
+// $.{event-name}(el, callback(event))
 ```
-
-Takes a `string` and capitalizes first letter. List of methods: 
 
 - abort
 - beforeinput
@@ -38,4 +37,3 @@ Takes a `string` and capitalizes first letter. List of methods:
 - select
 - unload
 - wheel
-

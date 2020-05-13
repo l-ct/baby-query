@@ -1,14 +1,13 @@
 
-### Lists
+#### Lists
 
 ```js
 $.each(list, (item, index, list) => console.log(item))
-```
+// iterates through a NodeList or HTMLCollection
+// placing each item in the callback
 
-Iterates through an `array` or `NodeList` and places the list items in the callback
-
-```js
 $.eachRight(list, (item, index, list) => console.log(item))
+// starting from the end is useful when deletingn items...
+// ... NodeLists are live changing the value of list.length
+// as loops progress
 ```
-
-Iterates through an `array` or `NodeList` from the end

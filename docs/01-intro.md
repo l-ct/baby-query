@@ -7,4 +7,3 @@ _babyQuery_, Syntactic sugar for common JS DOM methods. Compatible with IE >8. M
 ```
 
 ***
-

@@ -1,2 +1,2 @@
 #!/bin/bash
-cat ./src/*.js > \$.js && cat ./docs/*.md > README.md
+cat ./src/*.js > \babyquery.js && cat ./docs/*.md > README.md

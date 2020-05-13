@@ -5,7 +5,6 @@ provides (hopefully) helpful methods
 to a global $ object
 
 */
-
 // function close on later file
 // this is kinda hacky
 (function(window, undefined){
